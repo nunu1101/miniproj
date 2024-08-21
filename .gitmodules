@@ -7,3 +7,4 @@
 [submodule "Final-front"]
 	path = Final-front
 	url = https://github.com/DibiDibiDeep/Final-front.git
+	branch = feature/soobin
