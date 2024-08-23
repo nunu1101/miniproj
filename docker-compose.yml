@@ -1,0 +1,39 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./Final-front/soobin
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+    environment:
+      - WDS_SOCKET_PORT=0
+
+  backend:
+    build:
+      context: ./Final-back/soobin
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=1234
+      - MYSQL_DATABASE=click
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: click
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  db_data:
